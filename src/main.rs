@@ -14,7 +14,7 @@ use std::string::String;
 type Result<T> = result::Result<T, Box<Error>>;
 
 fn run() -> Result<()> {    
-    let matches = App::new("jp").version("0.1")
+    let matches = App::new(env!("CARGO_PKG_NAME")).version(env!("CARGO_PKG_VERSION"))
         .about("Extract JSON elements from a stream")
         .author("Brian McCallister <brianm@skife.org>")
         .arg(Arg::with_name("INPUT")
