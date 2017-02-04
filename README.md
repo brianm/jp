@@ -40,7 +40,7 @@ then `cargo build --release` and get binary at `target/release/jp`
 # Usage
 
 ```
-jp 0.2.0
+jp 
 Extract JSON elements from a stream via JSON Pointers
 
 USAGE:
