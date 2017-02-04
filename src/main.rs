@@ -16,9 +16,9 @@ fn main() {
         .get_matches();
 
     let input = matches.value_of("INPUT").unwrap_or("-");    
-    let rdr: Box<io::Read> = match input {
-        "-" => Box::new(io::stdin()),
-        _   => Box::new(fs::File::open(input).unwrap())
+    let rdr: io::Read = match input {
+        "-" => io::stdin(),
+        _   => fs::File::open(input).unwrap()
     };
 
     let iter = Deserializer::from_reader(rdr).into_iter::<Value>();
