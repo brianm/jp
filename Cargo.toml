@@ -1,0 +1,8 @@
+[package]
+name = "jp"
+version = "0.1.0"
+authors = ["Brian McCallister <brianm@skife.org>"]
+
+[dependencies]
+serde_json = "0.9"
+clap = "2.20"

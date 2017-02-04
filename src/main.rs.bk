@@ -1,0 +1,24 @@
+extern crate serde_json;
+extern crate clap;
+
+use serde_json::Value;
+use serde_json::Deserializer;
+use std::io;
+use clap::App;
+
+fn main() {
+    let app: App = App::new("jp");    
+    app.version("0.1")
+        .about("Extract JSON elements from a stream")
+        .author("Brian McCallister <brianm@skife.org>")                
+        .get_matches();
+
+
+    let iter = Deserializer::from_reader(io::stdin()).into_iter::<Value>();
+    for rv in iter {
+        let v: Value = rv.unwrap();
+        println!("{}\t{}",
+                 v.pointer("/name").unwrap(),
+                 v.pointer("/age").unwrap());
+    }
+}
