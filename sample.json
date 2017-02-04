@@ -1,4 +1,4 @@
-{ "name": "Brian", "age": 42 }
-{ "name": "Ian", "age": 9 }
-{ "name": "Cora", "age": 7 }
-{ "name": "Joy" } 
+{ "name": "Brian", "age": 42, "jobs":["programmer"]}
+{ "name": "Ian", "age": 9, "school":{"grade":4, "teacher":"Jenn"}}
+{ "name": "Cora", "age": 7, "school":{"grade":1, "teacher":"Judith"}}
+{ "name": "Joy", "jobs":["photographer"] } 

@@ -9,6 +9,7 @@ use std::fs;
 use std::result;
 use std::error::{Error};
 use std::vec::Vec;
+use std::string::String;
 
 type Result<T> = result::Result<T, Box<Error>>;
 
@@ -45,7 +46,7 @@ fn run() -> Result<()> {
         let mut line = String::new();
         let v: Value = rv.unwrap();
         for p in &pointers {
-            line.push_str(&format!("{}", v.pointer(p).unwrap_or(&Value::Null)));
+            line.push_str(&render(v.pointer(p).unwrap_or(&Value::Null)));
             line.push('\t');
         }
         line.pop();
@@ -65,3 +66,13 @@ fn main() {
     }
 }
 
+fn render(v: &Value) -> String {
+    match v {
+        &Value::Null => String::new(),
+        &Value::Bool(ref b) => format!("{}", b),
+        &Value::Number(ref b) => format!("{}", b),
+        &Value::String(ref s) => format!("{}", s),
+        &Value::Array(_) =>  String::from("[...]"), //format!("{}", a),
+        &Value::Object(_) => String::from("{...}")  //  format!("{}", o)
+    }
+}
