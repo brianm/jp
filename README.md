@@ -31,9 +31,7 @@ $
 On OS X, via Homebrew:
 
 ```
-$ brew tap brianm/tools
-$ brew update
-$ brew install jp
+$ brew install brianm/tools/jp
 ```
 
 Otherwise, build from source: install rust >= 1.15, checkout this repo, 
