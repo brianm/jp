@@ -72,7 +72,7 @@ fn render(v: &Value) -> String {
         &Value::Bool(ref b) => format!("{}", b),
         &Value::Number(ref b) => format!("{}", b),
         &Value::String(ref s) => format!("{}", s),
-        &Value::Array(_) =>  String::from("[...]"), //format!("{}", a),
-        &Value::Object(_) => String::from("{...}")  //  format!("{}", o)
+        &Value::Array(_) => format!("{}", v),
+        &Value::Object(_) => format!("{}", v)
     }
 }
