@@ -7,32 +7,32 @@ use std::io::{self, Write};
 use clap::{App, Arg};
 use std::fs;
 use std::result;
-use std::error::{Error};
+use std::error::Error;
 use std::vec::Vec;
 use std::string::String;
 
 type Result<T> = result::Result<T, Box<Error>>;
 
-fn run() -> Result<()> {    
-    let matches = App::new(env!("CARGO_PKG_NAME")).version(env!("CARGO_PKG_VERSION"))
+fn run() -> Result<()> {
+    let matches = App::new(env!("CARGO_PKG_NAME"))
+        .version(env!("CARGO_PKG_VERSION"))
         .about("Extract JSON elements from a stream")
-        .author("Brian McCallister <brianm@skife.org>")
         .arg(Arg::with_name("INPUT")
-                .short("i")
-                .long("input")
-                .takes_value(true)
-                .help("input file to use if not receiving on stdin"))
+            .short("i")
+            .long("input")
+            .takes_value(true)
+            .help("input file to use if not receiving on stdin"))
         .arg(Arg::with_name("POINTER")
-                .index(1)
-                .required(true)
-                .multiple(true)
-                .help("JSON Pointer expressions to match on input"))
+            .index(1)
+            .required(true)
+            .multiple(true)
+            .help("JSON Pointer expressions to match on input"))
         .get_matches();
 
-    let input = matches.value_of("INPUT").unwrap_or("-");    
+    let input = matches.value_of("INPUT").unwrap_or("-");
     let rdr: Box<io::Read> = match input {
         "-" => Box::new(io::stdin()),
-        _   => Box::new(try!(fs::File::open(input)))
+        _ => Box::new(try!(fs::File::open(input))),
     };
 
     // unwrap is safe because POINTER is required
@@ -45,22 +45,22 @@ fn run() -> Result<()> {
     let iter = Deserializer::from_reader(rdr).into_iter::<Value>();
     for rv in iter {
         let v: Value = try!(rv);
-        let mut line = String::new();        
+        let mut line = String::new();
         for p in &pointers {
             line.push_str(&render(v.pointer(p).unwrap_or(&Value::Null)));
             line.push('\t');
         }
         line.pop();
-        println!("{}", line);                 
+        println!("{}", line);
     }
     Ok(())
 }
 
-fn main() {    
+fn main() {
     match run() {
         Ok(_) => {}
-        Err(e) => {            
-            writeln!(&mut io::stderr(), "error: {}", e).unwrap();            
+        Err(e) => {
+            writeln!(&mut io::stderr(), "error: {}", e).unwrap();
             std::process::exit(1);
         }
     }
@@ -73,6 +73,6 @@ fn render(v: &Value) -> String {
         &Value::Number(ref b) => format!("{}", b),
         &Value::String(ref s) => format!("{}", s),
         &Value::Array(_) => format!("{}", v),
-        &Value::Object(_) => format!("{}", v)
+        &Value::Object(_) => format!("{}", v),
     }
 }
