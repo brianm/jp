@@ -22,6 +22,11 @@ fn run() -> Result<()> {
             .long("input")
             .takes_value(true)
             .help("input file to use if not receiving on stdin"))
+        .arg(Arg::with_name("DELIMITER")
+            .short("d")
+            .long("delimiter")
+            .takes_value(true)
+            .help("delimiter between output values, default is tab"))
         .arg(Arg::with_name("POINTER")
             .required(true)
             .multiple(true)
@@ -34,6 +39,8 @@ fn run() -> Result<()> {
         _ => Box::new(try!(fs::File::open(input))),
     };
 
+    let delim = matches.value_of("DELIMITER").unwrap_or("\t");
+
     let mut pointers = Vec::new();
     // unwrap is safe as POINTER is required
     for p in matches.values_of("POINTER").unwrap() {
@@ -42,13 +49,13 @@ fn run() -> Result<()> {
 
     let iter = Deserializer::from_reader(rdr).into_iter::<Value>();
     for rv in iter {
-        let v: Value = try!(rv);
+        let v = try!(rv);
         let mut line = String::new();
         for p in &pointers {
             line.push_str(&render(v.pointer(p).unwrap_or(&Value::Null)));
-            line.push('\t');
+            line.push_str(delim);
         }
-        line.pop();
+        line.pop(); // remove the final tab
         println!("{}", line);
     }
     Ok(())
