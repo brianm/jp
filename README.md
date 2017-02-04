@@ -8,6 +8,19 @@ Brian	dog
 Keith	dog	cat
 ```
 
+# Install
+
+On OS X, via Homebrew:
+
+```
+$ brew tap brianm/tools
+$ brew update
+$ brew install jp
+```
+
+Otherwise, build from source: install rust >= 1.15, checkout this repo, 
+then `cargo build --release` and get binary at `target/release/jp`
+
 # Usage
 
 ```
