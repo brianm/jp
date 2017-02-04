@@ -2,6 +2,7 @@
 name = "jp"
 version = "0.3.0"
 authors = ["Brian McCallister <brianm@skife.org>"]
+build = "build.rs"
 
 [dependencies]
 serde_json = "0.9"
