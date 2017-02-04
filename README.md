@@ -56,3 +56,9 @@ OPTIONS:
 ARGS:
     <POINTER>...    JSON Pointer expressions to match on input
 ```
+
+# Inspired by jq
+
+[jq](https://stedolan.github.io/jq/) is awesome, and much more powerful than `jp`. However, I can
+never remember its query language, and mostly want to convert json into tab delimited UNIXy stuff,
+so this is easier for my 80% use cases :-) jq is way more powerful and awesome, though.
