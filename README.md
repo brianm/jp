@@ -3,9 +3,27 @@
 Extract values from JSON (or a stream of JSON values) via [json pointers](https://tools.ietf.org/html/rfc6901):
 
 ```
-$ echo '{"name":"Brian", "pets":["dog"]} {"name":"Keith", "pets":["dog", "cat"]}' | jp /name /pets/0 /pets/1
-Brian	dog
-Keith	dog	cat
+$ cat sample.json
+{
+    "name": "Brian",
+    "pets":["dog"],
+    "diet":{
+        "drink": "coffee",
+        "eat": "bacon"
+    }
+}
+{
+    "name": "Keith",
+    "pets": ["cat", "dog"],
+    "diet": {
+        "drink": "tea",
+        "eat": "granola"
+    }
+}
+$ cat sample.json | jp /name /diet/drink /pets/0 /pets/1
+Brian	coffee	dog
+Keith	tea	cat	dog
+$
 ```
 
 # Install

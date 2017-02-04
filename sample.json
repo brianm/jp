@@ -8,7 +8,7 @@
 }
 {
     "name": "Keith",
-    "pets": ["cat", "dog"]
+    "pets": ["cat", "dog"],
     "diet": {
         "drink": "tea",
         "eat": "granola"
