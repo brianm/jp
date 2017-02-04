@@ -16,14 +16,13 @@ type Result<T> = result::Result<T, Box<Error>>;
 fn run() -> Result<()> {
     let matches = App::new(env!("CARGO_PKG_NAME"))
         .version(env!("CARGO_PKG_VERSION"))
-        .about("Extract JSON elements from a stream")
+        .about("Extract JSON elements from a stream via JSON Pointers")
         .arg(Arg::with_name("INPUT")
             .short("i")
             .long("input")
             .takes_value(true)
             .help("input file to use if not receiving on stdin"))
         .arg(Arg::with_name("POINTER")
-            .index(1)
             .required(true)
             .multiple(true)
             .help("JSON Pointer expressions to match on input"))
@@ -35,10 +34,9 @@ fn run() -> Result<()> {
         _ => Box::new(try!(fs::File::open(input))),
     };
 
-    // unwrap is safe because POINTER is required
-    let pointers_in = matches.values_of("POINTER").unwrap();
     let mut pointers = Vec::new();
-    for p in pointers_in {
+    // unwrap is safe as POINTER is required
+    for p in matches.values_of("POINTER").unwrap() {
         pointers.push(p);
     }
 
