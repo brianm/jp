@@ -40,8 +40,8 @@ then `cargo build --release` and get binary at `target/release/jp`
 # Usage
 
 ```
-jp 0.1.0
-Extract JSON elements from a stream
+jp 0.2.0
+Extract JSON elements from a stream via JSON Pointers
 
 USAGE:
     jp [OPTIONS] <POINTER>...
@@ -51,7 +51,8 @@ FLAGS:
     -V, --version    Prints version information
 
 OPTIONS:
-    -i, --input <INPUT>    input file to use if not receiving on stdin
+    -d, --delimiter <DELIMITER>    delimiter between output values, default is tab
+    -i, --input <INPUT>            input file to use if not receiving on stdin
 
 ARGS:
     <POINTER>...    JSON Pointer expressions to match on input
