@@ -21,8 +21,8 @@ $ cat sample.json
     }
 }
 $ cat sample.json | jp /name /diet/drink /pets/0 /pets/1
-Brian	coffee	dog
-Keith	tea	cat	dog
+Brian   coffee  dog
+Keith   tea     cat   dog
 $
 ```
 
