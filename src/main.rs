@@ -3,7 +3,7 @@ extern crate clap;
 
 use serde_json::Value;
 use serde_json::Deserializer;
-use std::io;
+use std::io::{self, Write};
 use clap::{App, Arg};
 use std::fs;
 use std::result;
@@ -35,6 +35,7 @@ fn run() -> Result<()> {
         _   => Box::new(try!(fs::File::open(input)))
     };
 
+    // unwrap is safe because POINTER is required
     let pointers_in = matches.values_of("POINTER").unwrap();
     let mut pointers = Vec::new();
     for p in pointers_in {
@@ -43,8 +44,8 @@ fn run() -> Result<()> {
 
     let iter = Deserializer::from_reader(rdr).into_iter::<Value>();
     for rv in iter {
-        let mut line = String::new();
-        let v: Value = rv.unwrap();
+        let v: Value = try!(rv);
+        let mut line = String::new();        
         for p in &pointers {
             line.push_str(&render(v.pointer(p).unwrap_or(&Value::Null)));
             line.push('\t');
@@ -58,9 +59,8 @@ fn run() -> Result<()> {
 fn main() {    
     match run() {
         Ok(_) => {}
-        Err(e) => {
-            // TODO print to STDERR instead of STDOUT
-            println!("{}", e);
+        Err(e) => {            
+            writeln!(&mut io::stderr(), "error: {}", e).unwrap();            
             std::process::exit(1);
         }
     }
