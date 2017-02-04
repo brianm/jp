@@ -6,4 +6,3 @@ authors = ["Brian McCallister <brianm@skife.org>"]
 [dependencies]
 serde_json = "0.9"
 clap = "2.20"
-env_logger = "0.3"

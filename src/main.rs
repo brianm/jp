@@ -1,6 +1,5 @@
 extern crate serde_json;
 extern crate clap;
-extern crate env_logger;
 
 use serde_json::Value;
 use serde_json::Deserializer;
@@ -13,8 +12,7 @@ use std::vec::Vec;
 
 type Result<T> = result::Result<T, Box<Error>>;
 
-fn run() -> Result<()> {
-    try!(env_logger::init());
+fn run() -> Result<()> {    
     let matches = App::new("jp").version("0.1")
         .about("Extract JSON elements from a stream")
         .author("Brian McCallister <brianm@skife.org>")
