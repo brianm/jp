@@ -1,4 +1,17 @@
-{ "name": "Brian", "age": 42, "jobs":["programmer"]}
-{ "name": "Ian", "age": 9, "school":{"grade":4, "teacher":"Jenn"}}
-{ "name": "Cora", "age": 7, "school":{"grade":1, "teacher":"Judith"}}
-{ "name": "Joy", "jobs":["photographer"] } 
+{
+    "name": "Brian",
+    "pets":["dog"],
+    "diet":{
+        "drink": "coffee",
+        "eat": "bacon"
+    }
+}
+{
+    "name": "Keith",
+    "pets": ["cat", "dog"]
+    "diet": {
+        "drink": "tea",
+        "eat": "granola"
+    }
+}
+
