@@ -1,6 +1,6 @@
 [package]
 name = "jp"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["Brian McCallister <brianm@skife.org>"]
 build = "build.rs"
 
