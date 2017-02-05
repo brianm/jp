@@ -1,6 +1,7 @@
 {
     "name": "Brian",
     "pets":["dog"],
+    "story":"Sometimes\nI add newlines and\ttabs\n",
     "diet":{
         "drink": "coffee",
         "eat": "bacon"
