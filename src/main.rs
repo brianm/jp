@@ -13,6 +13,16 @@ use std::string::String;
 
 type Result<T> = result::Result<T, Box<Error>>;
 
+fn main() {
+    match run() {
+        Ok(_) => {}
+        Err(e) => {
+            writeln!(&mut io::stderr(), "error: {}", e).unwrap();
+            std::process::exit(1);
+        }
+    }
+}
+
 fn run() -> Result<()> {
     let matches = App::new(env!("CARGO_PKG_NAME"))
         .version(env!("CARGO_PKG_VERSION"))
@@ -59,16 +69,6 @@ fn run() -> Result<()> {
         println!("{}", line);
     }
     Ok(())
-}
-
-fn main() {
-    match run() {
-        Ok(_) => {}
-        Err(e) => {
-            writeln!(&mut io::stderr(), "error: {}", e).unwrap();
-            std::process::exit(1);
-        }
-    }
 }
 
 fn render(v: &Value) -> String {
