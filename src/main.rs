@@ -46,7 +46,7 @@ fn run() -> Result<()> {
     let input = matches.value_of("INPUT").unwrap_or("-");
     let rdr: Box<io::Read> = match input {
         "-" => Box::new(io::stdin()),
-        _ => Box::new(try!(fs::File::open(input))),
+        _ => Box::new(fs::File::open(input)?),
     };
 
     let delim = matches.value_of("DELIMITER").unwrap_or("\t");
@@ -59,7 +59,7 @@ fn run() -> Result<()> {
 
     let iter = Deserializer::from_reader(rdr).into_iter::<Value>();
     for rv in iter {
-        let v = try!(rv);
+        let v = rv?;
         let mut line = String::new();
         for p in &pointers {
             line.push_str(&render(v.pointer(p).unwrap_or(&Value::Null)));
