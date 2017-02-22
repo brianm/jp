@@ -76,8 +76,11 @@ fn render(v: &Value) -> String {
         &Value::Null => String::new(),
         &Value::Bool(ref b) => format!("{}", b),
         &Value::Number(ref b) => format!("{}", b),
-        &Value::String(ref s) => format!("{}", s.replace("\n", "\\n")
-                                                .replace("\t", "\\t")),
+        &Value::String(ref s) => {
+            format!("{}",
+                    s.replace("\n", "\\n")
+                        .replace("\t", "\\t"))
+        }
         &Value::Array(_) => format!("{}", v),
         &Value::Object(_) => format!("{}", v),
     }
