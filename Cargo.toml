@@ -7,3 +7,5 @@ build = "build.rs"
 [dependencies]
 serde_json = "0.9"
 clap = "2.20"
+human-panic = "1.0.1"
+failure = "0.1.3"

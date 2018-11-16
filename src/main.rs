@@ -1,23 +1,28 @@
-extern crate serde_json;
 extern crate clap;
+extern crate failure;
+extern crate human_panic;
+extern crate serde_json;
 
-use serde_json::Value;
-use serde_json::Deserializer;
-use std::io::{self, Write};
 use clap::{App, Arg};
+use failure::Error;
+use human_panic::setup_panic;
+use serde_json::Deserializer;
+use serde_json::Value;
 use std::fs;
+use std::io;
 use std::result;
-use std::error::Error;
-use std::vec::Vec;
 use std::string::String;
+use std::vec::Vec;
 
-type Result<T> = result::Result<T, Box<Error>>;
+type Result<T> = result::Result<T, Error>;
 
 fn main() {
+    setup_panic!();
+
     match run() {
         Ok(_) => {}
         Err(e) => {
-            writeln!(&mut io::stderr(), "error: {}", e).unwrap();
+            eprintln!("error: {}", e);
             std::process::exit(1);
         }
     }
@@ -27,21 +32,24 @@ fn run() -> Result<()> {
     let matches = App::new(env!("CARGO_PKG_NAME"))
         .version(env!("CARGO_PKG_VERSION"))
         .about("Extract JSON elements from a stream via JSON Pointers")
-        .arg(Arg::with_name("INPUT")
-            .short("i")
-            .long("input")
-            .takes_value(true)
-            .help("input file to use if not receiving on stdin"))
-        .arg(Arg::with_name("DELIMITER")
-            .short("d")
-            .long("delimiter")
-            .takes_value(true)
-            .help("delimiter between output values, default is tab"))
-        .arg(Arg::with_name("POINTER")
-            .required(true)
-            .multiple(true)
-            .help("JSON Pointer expressions to match on input"))
-        .get_matches();
+        .arg(
+            Arg::with_name("INPUT")
+                .short("i")
+                .long("input")
+                .takes_value(true)
+                .help("input file to use if not receiving on stdin"),
+        ).arg(
+            Arg::with_name("DELIMITER")
+                .short("d")
+                .long("delimiter")
+                .takes_value(true)
+                .help("delimiter between output values, default is tab"),
+        ).arg(
+            Arg::with_name("POINTER")
+                .required(true)
+                .multiple(true)
+                .help("JSON Pointer expressions to match on input"),
+        ).get_matches();
 
     let input = matches.value_of("INPUT").unwrap_or("-");
     let rdr: Box<io::Read> = match input {
@@ -76,11 +84,7 @@ fn render(v: &Value) -> String {
         &Value::Null => String::new(),
         &Value::Bool(ref b) => format!("{}", b),
         &Value::Number(ref b) => format!("{}", b),
-        &Value::String(ref s) => {
-            format!("{}",
-                    s.replace("\n", "\\n")
-                        .replace("\t", "\\t"))
-        }
+        &Value::String(ref s) => format!("{}", s.replace("\n", "\\n").replace("\t", "\\t")),
         &Value::Array(_) => format!("{}", v),
         &Value::Object(_) => format!("{}", v),
     }
