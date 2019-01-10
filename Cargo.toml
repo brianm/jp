@@ -3,6 +3,7 @@ name = "jp"
 version = "0.4.0"
 authors = ["Brian McCallister <brianm@skife.org>"]
 build = "build.rs"
+edition = "2018"
 
 [dependencies]
 serde_json = "0.9"

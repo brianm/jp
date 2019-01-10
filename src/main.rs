@@ -1,8 +1,3 @@
-extern crate clap;
-extern crate failure;
-extern crate human_panic;
-extern crate serde_json;
-
 use clap::{App, Arg};
 use failure::Error;
 use human_panic::setup_panic;
