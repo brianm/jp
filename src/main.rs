@@ -33,21 +33,24 @@ fn run() -> Result<()> {
                 .long("input")
                 .takes_value(true)
                 .help("input file to use if not receiving on stdin"),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("DELIMITER")
                 .short("d")
                 .long("delimiter")
                 .takes_value(true)
                 .help("delimiter between output values, default is tab"),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("POINTER")
                 .required(true)
                 .multiple(true)
                 .help("JSON Pointer expressions to match on input"),
-        ).get_matches();
+        )
+        .get_matches();
 
     let input = matches.value_of("INPUT").unwrap_or("-");
-    let rdr: Box<io::Read> = match input {
+    let rdr: Box<dyn io::Read> = match input {
         "-" => Box::new(io::stdin()),
         _ => Box::new(fs::File::open(input)?),
     };
